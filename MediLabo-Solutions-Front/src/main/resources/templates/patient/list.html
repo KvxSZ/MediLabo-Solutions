@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Liste des patients</title>
+  <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            padding: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #fff;
+        }
+        #medilabo {
+            padding: 10px 20px;
+            border-radius: 10px;
+            background: linear-gradient(to right, #0068ff, #073375);
+            color: white;
+            margin-right: 20px;
+        }
+        .menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            margin-right: 20px;
+            font-weight: bold;
+        }
+        .menu li {
+            display: inline-block;
+            margin-right: 20px;
+        }
+        .menu li:last-child {
+            margin-right: 0;
+        }
+        .menu li a {
+            color: #666;
+            text-decoration: none;
+        }
+        .menu li a.active {
+            color: #007bff;
+        }
+        .breadcrumb {
+            background-color: #e7e7e7;
+            padding: 10px 10px;
+            color: #666;
+            display: flex;
+            align-items: center;
+            font-weight: bold;
+        }
+        .breadcrumb span {
+            margin-right: 5px;
+        }
+        .breadcrumb span:first-child {
+            color: #007bff;
+            font-weight: bold;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #e5e5e5;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 20px;
+        }
+
+        .patient-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #0068ff;
+            font-size: 18px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between; /* Espace entre les éléments */
+            align-items: center; /* Alignement vertical centré */
+        }
+
+        .add-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #0068ff; /* Couleur de fond du bouton */
+            color: white; /* Couleur du texte */
+            text-decoration: none; /* Supprimer la décoration du texte */
+            border-radius: 5px; /* Coins arrondis */
+            font-weight: bold;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+
+        .add-button:hover {
+            background-color: #0056cc; /* Couleur de fond au survol */
+        }
+
+        .patients {
+            margin-top: 50px;
+            color: #000;
+            border: 1px solid #000;
+            border-collapse: collapse;
+            width: 100%;
+            max-width: 100%;
+            table-layout: fixed;
+        }
+        .patients th,
+        .patients td {
+            border: none;
+            padding: 20px; /* Augmenter le padding pour ajouter de l'espace */
+            text-align: center;
+        }
+        .patients th {
+            background-color: #0068ff;
+            color: #fff;
+        }
+        .patients tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .patients tbody tr:nth-child(odd) {
+            background-color: #fff;
+        }
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .pagination a {
+            display: inline-block;
+            color: blue;
+            padding: 8px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+            border: 1px solid #ddd;
+            background-color: #0068ff;
+            border-radius: 5px;
+        }
+
+        .pagination a.active {
+            background-color: blue;
+            color: white;
+        }
+
+        .pagination button:hover:not(.active) {
+            background-color: #ddd;
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+  <div id="medilabo">MediLabo-Solutions</div>
+  <ul class="menu">
+    <li><a href="/home">Home</a></li>
+    <li><a href="#" class="active">Patient</a></li>
+    <li><a href="/logout">Log off</a></li>
+  </ul>
+</div>
+
+<div class="content">
+  <div class="breadcrumb">
+    <span>Home / </span>
+    <span>Patient</span>
+  </div>
+</div>
+
+<div class="patient-container">
+  <div class="patient-title">
+    Liste des patients
+  </div>
+  <a href="/patient/add" class="add-button">Ajouter</a>
+</div>
+
+<div class="container">
+  <table class="patients">
+    <thead>
+    <tr>
+      <th>Nom</th>
+      <th>Prenom</th>
+      <th>Date de Naissance</th>
+      <th>Genre</th>
+      <th>Adresse</th>
+      <th>Telephone</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="p : ${patients}">
+      <td th:text="${p.nom}"></td>
+      <td th:text="${p.prenom}"></td>
+      <td th:text="${p.dateDeNaissance}"></td>
+      <td th:text="${p.genre}"></td>
+      <td th:text="${p.adressePostale}"></td>
+      <td th:text="${p.telephone}"></td>
+      <td style="width: 15%" class="text-center">
+        <a th:href="@{/patient/update/{id}(id=${p.patientId})}">Edit</a>&nbsp;&nbsp;
+        <a th:href="@{/patient/delete/{id}(id=${p.patientId})}">Delete</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>

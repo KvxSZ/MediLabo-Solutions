@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ajouter un Patient</title>
+  <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            padding: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #fff;
+        }
+        #medilabo {
+            padding: 10px 20px;
+            border-radius: 10px;
+            background: linear-gradient(to right, #0068ff, #073375);
+            color: white;
+            margin-right: 20px;
+        }
+        .menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            margin-right: 20px;
+            font-weight: bold;
+        }
+        .menu li {
+            display: inline-block;
+            margin-right: 20px;
+        }
+        .menu li:last-child {
+            margin-right: 0;
+        }
+        .menu li a {
+            color: #666;
+            text-decoration: none;
+        }
+        .menu li a.active {
+            color: #007bff;
+        }
+        .breadcrumb {
+            background-color: #e7e7e7;
+            padding: 10px 10px;
+            color: #666;
+            display: flex;
+            align-items: center;
+            font-weight: bold;
+        }
+        .breadcrumb span {
+            margin-right: 5px;
+        }
+        .breadcrumb span:first-child {
+            color: #007bff;
+            font-weight: bold;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 20px;
+        }
+        h1 {
+            color: #0068ff;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .form-group input[type="date"] {
+            padding: 6px;
+        }
+        .form-group button {
+            background-color: #0068ff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .form-group button:hover {
+            background-color: #0057d9;
+        }
+        .form-group a {
+            display: inline-block;
+            margin-top: 10px;
+            text-decoration: none;
+            color: #0068ff;
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+  <div id="medilabo">MediLabo-Solutions</div>
+  <ul class="menu">
+    <li><a href="/home">Home</a></li>
+    <li><a href="/patients" class="active">Patients</a></li>
+    <li><a href="/logout">Log off</a></li>
+  </ul>
+</div>
+
+<div class="content">
+  <div class="breadcrumb">
+    <span>Home / </span>
+    <span>Patient /</span>
+    <span>Ajout</span>
+  </div>
+</div>
+
+<div class="container">
+  <h1>Modifier Patient</h1>
+
+  <form action="#" th:action="@{/patient/validate}" th:object="${patient}" method="post">
+    <div class="form-group">
+      <label for="nom">Nom</label>
+      <input type="text" id="nom" name="nom" th:field="*{nom}" required />
+    </div>
+    <div class="form-group">
+      <label for="prenom">Prénom</label>
+      <input type="text" id="prenom" name="prenom" th:field="*{prenom}" required />
+    </div>
+    <div class="form-group">
+      <label for="dateDeNaissance">Date de Naissance</label>
+      <input type="date" id="dateDeNaissance" name="dateDeNaissance" th:field="*{dateDeNaissance}" required />
+    </div>
+    <div class="form-group">
+      <label for="genre">Genre</label>
+      <select id="genre" name="genre" th:field="*{genre}" required>
+        <option value="H">Homme</option>
+        <option value="F">Femme</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="adressePostale">Adresse Postale</label>
+      <input type="text" id="adressePostale" name="adressePostale" th:field="*{adressePostale}"/>
+    </div>
+    <div class="form-group">
+      <label for="telephone">Téléphone</label>
+      <input type="tel" id="telephone" name="telephone" th:field="*{telephone}"/>
+    </div>
+    <div class="form-group">
+      <button type="submit">Ajouter</button>
+    </div>
+  </form>
+</div>
+</body>
+</html>
