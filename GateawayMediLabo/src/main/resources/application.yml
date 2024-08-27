@@ -13,6 +13,16 @@ spring:
           predicates:
             - Path=/patient/**
 
+        - id: notes-services
+          uri: http://localhost:8083
+          predicates:
+            - Path=/note/**
+
+        - id: risque-services
+          uri: http://localhost:8084
+          predicates:
+            - Path=/risque/**
+
 
       globalcors:
         cors-configurations:

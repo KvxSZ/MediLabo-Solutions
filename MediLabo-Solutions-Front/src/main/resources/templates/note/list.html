@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Liste des patients</title>
+  <title>Liste des notes</title>
   <style>
         body {
             font-family: Arial, sans-serif;
@@ -69,7 +69,7 @@
             padding: 20px;
         }
 
-        .patient-container {
+        .notes-container {
             max-width: 800px;
             margin: 0 auto;
             padding: 20px;
@@ -97,7 +97,7 @@
             background-color: #0056cc; /* Couleur de fond au survol */
         }
 
-        .patients {
+        .notes {
             margin-top: 50px;
             color: #000;
             border: 1px solid #000;
@@ -106,21 +106,46 @@
             max-width: 100%;
             table-layout: fixed;
         }
-        .patients th,
-        .patients td {
+        .notes th,
+        .notes td {
             border: none;
             padding: 20px; /* Augmenter le padding pour ajouter de l'espace */
             text-align: center;
         }
-        .patients th {
+        .notes th {
             background-color: #0068ff;
             color: #fff;
         }
-        .patients tbody tr:nth-child(even) {
+        .notes tbody tr:nth-child(even) {
             background-color: #f2f2f2;
         }
-        .patients tbody tr:nth-child(odd) {
+        .notes tbody tr:nth-child(odd) {
             background-color: #fff;
+        }
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .pagination a {
+            display: inline-block;
+            color: blue;
+            padding: 8px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+            border: 1px solid #ddd;
+            background-color: #0068ff;
+            border-radius: 5px;
+        }
+
+        .pagination a.active {
+            background-color: blue;
+            color: white;
+        }
+
+        .pagination button:hover:not(.active) {
+            background-color: #ddd;
         }
     </style>
 </head>
@@ -129,7 +154,8 @@
   <div id="medilabo">MediLabo-Solutions</div>
   <ul class="menu">
     <li><a href="/home">Home</a></li>
-    <li><a href="#" class="active">Patient</a></li>
+    <li><a href="/patient/list">Patient</a></li>
+    <li><a href="#" class="active">Note</a></li>
     <li><a href="/logout">Log off</a></li>
   </ul>
 </div>
@@ -137,47 +163,35 @@
 <div class="content">
   <div class="breadcrumb">
     <span>Home / </span>
-    <span>Patient</span>
+    <span>Note</span>
   </div>
 </div>
 
-<div class="patient-container">
-  <div class="patient-title">
-    Liste des patients
+<div class="notes-container">
+  <div class="notes-title">
+    Liste des notes
   </div>
-  <a href="/patient/add" class="add-button">Ajouter</a>
+  <a href="/note/add" class="add-button">Ajouter</a>
 </div>
 
 <div class="container">
-  <table class="patients">
+  <table class="notes">
     <thead>
     <tr>
-      <th>Risque</th>
-      <th>Nom</th>
-      <th>Prenom</th>
-      <th>Date de Naissance</th>
-      <th>Genre</th>
-      <th>Adresse</th>
-      <th>Telephone</th>
+      <th>Id</th>
+      <th>Patient</th>
       <th>Note</th>
       <th></th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="p : ${patients}">
-      <td th:text="${p.risque}"></td>
-      <td th:text="${p.nom}"></td>
-      <td th:text="${p.prenom}"></td>
-      <td th:text="${p.dateDeNaissance}"></td>
-      <td th:text="${p.genre}"></td>
-      <td th:text="${p.adressePostale}"></td>
-      <td th:text="${p.telephone}"></td>
+    <tr th:each="n : ${notes}">
+      <td th:text="${n.patId}"></td>
+      <td th:text="${n.patient}"></td>
+      <td th:text="${n.note}"></td>
       <td style="width: 15%" class="text-center">
-        <a th:href="@{/note/list/{id}(id=${p.patientId})}">Notes</a>&nbsp;&nbsp;
-      </td>
-      <td style="width: 15%" class="text-center">
-        <a th:href="@{/patient/update/{id}(id=${p.patientId})}">Edit</a>&nbsp;&nbsp;
-        <a th:href="@{/patient/delete/{id}(id=${p.patientId})}">Delete</a>
+        <a th:href="@{/note/update/{note}(id=${n.note})}">Edit</a>&nbsp;&nbsp;
+        <a th:href="@{/note/delete/{note}(id=${n.note})}">Delete</a>
       </td>
     </tr>
     </tbody>

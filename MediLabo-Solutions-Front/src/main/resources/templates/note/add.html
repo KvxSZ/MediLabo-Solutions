@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ajouter une note</title>
+  <style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+    .header {
+        padding: 5px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: #fff;
+    }
+    #medilabo {
+        padding: 10px 20px;
+        border-radius: 10px;
+        background: linear-gradient(to right, #0068ff, #073375);
+        color: white;
+        margin-right: 20px;
+    }
+    .menu {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        margin-right: 20px;
+        font-weight: bold;
+    }
+    .menu li {
+        display: inline-block;
+        margin-right: 20px;
+    }
+    .menu li:last-child {
+        margin-right: 0;
+    }
+    .menu li a {
+        color: #666;
+        text-decoration: none;
+    }
+    .menu li a.active {
+        color: #007bff;
+    }
+    .breadcrumb {
+        background-color: #e7e7e7;
+        padding: 10px 10px;
+        color: #666;
+        display: flex;
+        align-items: center;
+        font-weight: bold;
+    }
+    .breadcrumb span {
+        margin-right: 5px;
+    }
+    .breadcrumb span:first-child {
+        color: #007bff;
+        font-weight: bold;
+    }
+    .container {
+        max-width: 600px;
+        margin: 20px auto;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        padding: 20px;
+    }
+    h1 {
+        color: #0068ff;
+        text-align: center;
+    }
+    .form-group {
+        margin-bottom: 15px;
+    }
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+    .form-group input, .form-group select {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+    .form-group input[type="date"] {
+        padding: 6px;
+    }
+    .form-group button {
+        background-color: #0068ff;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+    .form-group button:hover {
+        background-color: #0057d9;
+    }
+    .form-group a {
+        display: inline-block;
+        margin-top: 10px;
+        text-decoration: none;
+        color: #0068ff;
+    }
+    .patient-name {
+        font-weight: bold;
+        color: #333;
+        margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+<div class="header">
+  <div id="medilabo">MediLabo-Solutions</div>
+  <ul class="menu">
+    <li><a href="/home">Home</a></li>
+    <li><a href="/patient/list">Patient</a></li>
+    <li><a href="#" class="active">Note</a></li>
+    <li><a href="/logout">Log off</a></li>
+  </ul>
+</div>
+
+<div class="content">
+  <div class="breadcrumb">
+    <span>Home / </span>
+    <span>Note /</span>
+    <span>Ajout</span>
+  </div>
+</div>
+
+<div class="container">
+  <h1>Ajouter Note</h1>
+
+  <form action="#" th:action="@{/note/validate}" th:object="${note}" method="post">
+    <!-- Sélection du patient -->
+    <div class="form-group">
+      <label for="patId">Patient</label>
+      <select id="patId" name="patId" th:field="*{patId}" required onchange="updatePatientName()">
+        <option value="" disabled selected>-- Sélectionnez un patient --</option>
+        <!-- Boucle pour afficher les patients -->
+        <option th:each="p : ${patients}"
+                th:value="${p.patientId}"
+                th:data-prenom="${p.prenom}"
+                th:text="${p.patientId} + ' - ' + ${p.prenom} + ' ' + ${p.nom}">
+          Patient
+        </option>
+      </select>
+    </div>
+
+    <!-- Affichage du prénom du patient -->
+    <div class="form-group">
+      <label for="patient">Prénom du Patient</label>
+      <input type="text" id="patient" name="patient" readonly/>
+    </div>
+
+    <!-- Champ de la note -->
+    <div class="form-group">
+      <label for="note">Note</label>
+      <input type="text" id="note" name="note" th:field="*{note}" required/>
+    </div>
+
+    <!-- Bouton pour soumettre le formulaire -->
+    <div class="form-group">
+      <button type="submit">Ajouter</button>
+    </div>
+  </form>
+</div>
+
+<script>
+  function updatePatientName() {
+    const selectElement = document.getElementById('patId');
+    const selectedOption = selectElement.options[selectElement.selectedIndex];
+    const prenom = selectedOption.getAttribute('data-prenom');
+    document.getElementById('patient').value = prenom;
+  }
+</script>
+</body>
+</html>

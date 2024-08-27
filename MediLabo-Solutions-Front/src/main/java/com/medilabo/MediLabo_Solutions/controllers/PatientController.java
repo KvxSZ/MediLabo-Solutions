@@ -1,6 +1,7 @@
 package com.medilabo.MediLabo_Solutions.controllers;
 
 
+import com.medilabo.MediLabo_Solutions.DTO.PatientRisque;
 import com.medilabo.MediLabo_Solutions.model.Patient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -14,7 +15,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 @RequestMapping("/patient")
@@ -33,9 +36,9 @@ public class PatientController {
     }
 
     @GetMapping("/list")
-    public String listePatients(Model model, @RequestParam(defaultValue = "0") Integer page){
+    public String listePatients(Model model){
         ResponseEntity<Patient[]> response = restTemplate.getForEntity(gateawayUrl+"patient/list", Patient[].class);
-        model.addAttribute("patients", response.getBody());
+        model.addAttribute("patients", getPatientWithRisque(response.getBody()));
         return "patient/list";
     }
 
@@ -75,6 +78,20 @@ public class PatientController {
     public String deleteUser(@PathVariable("id") Integer id) {
         restTemplate.delete(gateawayUrl+"patient/delete/{id}", id);
         return "redirect:/patient/list";
+    }
+
+
+    public List<PatientRisque> getPatientWithRisque(Patient[] patientList) {
+
+        List<PatientRisque> list = new ArrayList<>();
+
+        for (Patient patient : patientList){
+
+            ResponseEntity<String> response = restTemplate.getForEntity(gateawayUrl+"risque/evaluation/{id}", String.class, patient.getPatientId());
+            String risque = response.getBody();
+            list.add(new PatientRisque(risque, patient.getPatientId(),patient.getNom(), patient.getPrenom(), patient.getDateDeNaissance(), patient.getGenre(), patient.getAdressePostale(), patient.getTelephone()));
+        }
+        return list;
     }
 
 

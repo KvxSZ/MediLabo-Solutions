@@ -27,9 +27,16 @@ public class PatientController {
     }
 
     @GetMapping("/list")
-    public Iterable<Patient> listePatients(@RequestParam(defaultValue = "0") Integer page){
+    public Iterable<Patient> listePatients(){
         Iterable<Patient> patients = patientService.getPatients();
         return patients;
+    }
+
+    @GetMapping("/{id}")
+    public Patient getPatient(@PathVariable("id") Integer id){
+        Patient patient = patientService.getPatientById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalide user ID: " + id));
+        return patient;
     }
 
 
