@@ -10,6 +10,5 @@ import java.util.List;
 public interface NoteRepository extends MongoRepository<Note, String> {
 
     List<Note> findByPatId(String patId);
-    void deleteByNote(String note);
 
 }

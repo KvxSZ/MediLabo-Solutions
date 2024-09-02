@@ -4,6 +4,11 @@ server:
 spring:
   application:
     name: gateway-service
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8080/oauth2/default
 
   cloud:
     gateway:
@@ -23,7 +28,6 @@ spring:
           predicates:
             - Path=/risque/**
 
-
       globalcors:
         cors-configurations:
           '[/**]':
@@ -33,6 +37,7 @@ spring:
               - POST
               - DELETE
               - PUT
+
 
 # Pour la gestion des logs et la surveillance
 management:

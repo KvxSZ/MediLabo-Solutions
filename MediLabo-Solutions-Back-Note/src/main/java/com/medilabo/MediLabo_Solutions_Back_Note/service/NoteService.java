@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+
 
 @Service
 public class NoteService {
@@ -29,26 +29,6 @@ public class NoteService {
         return noteRepository.save(note);
     }
 
-    // Update an existing note
-    public Note updateNote(Note updatedNote) {
-        Optional<Note> existingNoteOptional = noteRepository.findById(updatedNote.getPatId());
-        if (existingNoteOptional.isPresent()) {
-            Note existingNote = existingNoteOptional.get();
-            existingNote.setPatient(updatedNote.getPatient());
-            existingNote.setNote(updatedNote.getNote());
-            return noteRepository.save(existingNote);
-        } else {
-            throw new RuntimeException("Note not found with ID: " + updatedNote.getPatId());
-        }
-    }
-
-    // Delete a note by ID
-    public void deleteNoteById(String id) {
-        noteRepository.deleteById(id);
-    }
-
-    // Delete a note by Note
-    public void deleteNoteByContent(String noteContent) {
-        noteRepository.deleteByNote(noteContent);
-    }
 }
+
+

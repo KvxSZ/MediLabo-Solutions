@@ -178,21 +178,14 @@
   <table class="notes">
     <thead>
     <tr>
-      <th>Id</th>
       <th>Patient</th>
       <th>Note</th>
-      <th></th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="n : ${notes}">
-      <td th:text="${n.patId}"></td>
       <td th:text="${n.patient}"></td>
       <td th:text="${n.note}"></td>
-      <td style="width: 15%" class="text-center">
-        <a th:href="@{/note/update/{note}(id=${n.note})}">Edit</a>&nbsp;&nbsp;
-        <a th:href="@{/note/delete/{note}(id=${n.note})}">Delete</a>
-      </td>
     </tr>
     </tbody>
   </table>
