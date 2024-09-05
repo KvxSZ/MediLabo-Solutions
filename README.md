@@ -6,4 +6,4 @@
 
 **Surveillance et Tests** : Intégrez des outils de profilage et de surveillance de l'empreinte énergétique pour identifier et corriger les inefficacités du code régulièrement.
 
-Pour ce projet qui est plutôt petit nous n'avons pas vraiment besoin de créer autant de microservice différent, ce qui réduit le coût des différents serveurs
+Pour ce projet qui est plutôt petit nous n'avons pas vraiment besoin de créer autant de microservice différent, ce qui réduit le nombre de serveur

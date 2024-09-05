@@ -28,19 +28,18 @@ public class RisqueController {
     @Autowired
     private RestTemplate restTemplate;
 
-    private String gateawayUrl = "http://localhost:8082/";
 
     @GetMapping("/evaluation/{id}")
     public String evaluationDesRisques(@PathVariable("id") Integer id){
         ResponseEntity<List<Note>> notes = restTemplate.exchange(
-                gateawayUrl + "note/list/{id}",
+                 "http://localhost:8083/note/list/{id}",
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<List<Note>>() {},
                 id
         );
         List<Note> listeNotes = notes.getBody();
-        ResponseEntity<Patient> response = restTemplate.getForEntity(gateawayUrl+"patient/{id}", Patient.class, id);
+        ResponseEntity<Patient> response = restTemplate.getForEntity("http://localhost:8081/patient/{id}", Patient.class, id);
         Patient patient = response.getBody();
 
 

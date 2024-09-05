@@ -3,6 +3,7 @@ package com.medilabo.MediLabo_Solutions.controllers;
 
 import com.medilabo.MediLabo_Solutions.DTO.PatientRisque;
 import com.medilabo.MediLabo_Solutions.model.Patient;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.http.*;
@@ -24,7 +25,13 @@ import java.util.List;
 public class PatientController {
 
     @Autowired
-    private RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
+
+    @Autowired
+    public PatientController(RestTemplate restTemplate){
+        this.restTemplate = restTemplate;
+    }
+
 
     private String gateawayUrl = "http://localhost:8082/";
 
@@ -36,8 +43,8 @@ public class PatientController {
     }
 
     @GetMapping("/list")
-    public String listePatients(Model model){
-        ResponseEntity<Patient[]> response = restTemplate.getForEntity(gateawayUrl+"patient/list", Patient[].class);
+    public String listePatients(HttpServletRequest request, Model model){
+        ResponseEntity<Patient[]> response = restTemplate.exchange(gateawayUrl+"patient/list",HttpMethod.GET,null, Patient[].class);
         model.addAttribute("patients", getPatientWithRisque(response.getBody()));
         return "patient/list";
     }
@@ -87,7 +94,7 @@ public class PatientController {
 
         for (Patient patient : patientList){
 
-            ResponseEntity<String> response = restTemplate.getForEntity(gateawayUrl+"risque/evaluation/{id}", String.class, patient.getPatientId());
+            ResponseEntity<String> response = restTemplate.exchange(gateawayUrl+"risque/evaluation/{id}",HttpMethod.GET,null, String.class, patient.getPatientId());
             String risque = response.getBody();
             list.add(new PatientRisque(risque, patient.getPatientId(),patient.getNom(), patient.getPrenom(), patient.getDateDeNaissance(), patient.getGenre(), patient.getAdressePostale(), patient.getTelephone()));
         }
