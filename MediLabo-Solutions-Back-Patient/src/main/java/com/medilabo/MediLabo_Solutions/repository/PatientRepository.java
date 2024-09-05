@@ -9,8 +9,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PatientRepository extends CrudRepository<Patient, Integer> {
 
-    //Find all patient in page
-    Page<Patient> findAll(Pageable pageable);
 
 
 }
