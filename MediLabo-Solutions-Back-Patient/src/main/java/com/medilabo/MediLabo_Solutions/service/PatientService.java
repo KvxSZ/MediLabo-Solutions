@@ -21,9 +21,6 @@ public class PatientService {
         return patientRepository.findAll();
     }
 
-    // Get all users in Page
-    public Page<Patient> getPatientPage(Integer page){ return patientRepository.findAll(PageRequest.of(page, 5));}
-
     // Get patient by ID
     public Optional<Patient> getPatientById(Integer id){
         return patientRepository.findById(id);
