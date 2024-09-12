@@ -1,10 +1,12 @@
 package com.medilabo.MediLabo_Solutions.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.DynamicUpdate;
 
 import java.util.Date;
 
 @Entity
+@DynamicUpdate
 @Table(name = "patient")
 public class Patient {
 

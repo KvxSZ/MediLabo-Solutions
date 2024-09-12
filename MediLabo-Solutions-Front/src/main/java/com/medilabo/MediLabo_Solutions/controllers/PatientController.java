@@ -33,7 +33,7 @@ public class PatientController {
     }
 
 
-    private String gateawayUrl = "http://localhost:8082/";
+    private String gateawayUrl = "http://gateway:8082/";
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {

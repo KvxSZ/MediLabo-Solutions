@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+  gateway:
+    build:
+      context: ./GateawayMediLabo
+      dockerfile: Dockerfile
+    container_name: gateway
+    ports:
+      - "8082:8082"
+
+  back-note:
+    build:
+      context: ./MediLabo-Solutions-Back-Note
+      dockerfile: Dockerfile
+    container_name: back-note
+    ports:
+      - "8083:8083"
+
+  back-patient:
+    build:
+      context: ./MediLabo-Solutions-Back-Patient
+      dockerfile: Dockerfile
+    container_name: back-patient
+    ports:
+      - "8081:8081"
+    depends_on:
+      - mysql
+
+  back-risque:
+    build:
+      context: ./MediLabo-Solutions-Back-Risque
+    container_name: back-risque
+    ports:
+      - "8084:8084"
+
+  front:
+    build:
+      context: ./MediLabo-Solutions-Front
+      dockerfile: Dockerfile
+    container_name: front
+    ports:
+      - "8080:8080"
+
+  mysql:
+    image: mysql:8.0
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: medilabo123
+      MYSQL_DATABASE: medilabo
+    volumes:
+      - db_data:/var/lib/mysql
+
+
+volumes:
+  db_data:
+  test_db_data:

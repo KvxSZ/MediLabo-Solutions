@@ -24,7 +24,7 @@ public class NoteController {
     @Autowired
     private RestTemplate restTemplate;
 
-    private String gateawayUrl = "http://localhost:8082/";
+    private String gateawayUrl = "http://gateway:8082/";
 
     @GetMapping("/list")
     public String listeNotes(Model model){

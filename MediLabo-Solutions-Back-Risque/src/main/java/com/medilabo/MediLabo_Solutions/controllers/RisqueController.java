@@ -32,14 +32,14 @@ public class RisqueController {
     @GetMapping("/evaluation/{id}")
     public String evaluationDesRisques(@PathVariable("id") Integer id){
         ResponseEntity<List<Note>> notes = restTemplate.exchange(
-                 "http://localhost:8083/note/list/{id}",
+                 "http://back-note:8083/note/list/{id}",
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<List<Note>>() {},
                 id
         );
         List<Note> listeNotes = notes.getBody();
-        ResponseEntity<Patient> response = restTemplate.getForEntity("http://localhost:8081/patient/{id}", Patient.class, id);
+        ResponseEntity<Patient> response = restTemplate.getForEntity("http://back-patient:8081/patient/{id}", Patient.class, id);
         Patient patient = response.getBody();
 
 
