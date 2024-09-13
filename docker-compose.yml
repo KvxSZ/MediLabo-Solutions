@@ -52,7 +52,20 @@ services:
     volumes:
       - db_data:/var/lib/mysql
 
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: medilabo123
+      MONGO_INITDB_DATABASE: medilabo
+    volumes:
+      - mongodb_data:/data/db
+
 
 volumes:
   db_data:
   test_db_data:
+  mongodb_data:
+  test_mongodb_data:
