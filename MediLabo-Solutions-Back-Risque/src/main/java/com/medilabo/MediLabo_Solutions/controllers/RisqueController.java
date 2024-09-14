@@ -61,7 +61,7 @@ public class RisqueController {
         }
 
         if (age <= 30) {
-            if (patient.getGenre().equalsIgnoreCase("M") && nbrDeclencheurs >= 3 && nbrDeclencheurs < 6) {
+            if (patient.getGenre().equalsIgnoreCase("M") && nbrDeclencheurs >= 3 && nbrDeclencheurs < 5) {
                 return "In Danger";
             }
             if (patient.getGenre().equalsIgnoreCase("F") && nbrDeclencheurs >= 4 && nbrDeclencheurs < 6) {

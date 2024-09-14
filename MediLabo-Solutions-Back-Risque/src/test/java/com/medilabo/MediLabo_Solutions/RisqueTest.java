@@ -123,10 +123,7 @@ public class RisqueTest {
         patient.setGenre("M");
 
         List<Note> notes = List.of(
-                createNoteWithText("Cholestérol"),
-                createNoteWithText("Fumeur"),
-                createNoteWithText("Hémoglobine A1C"),
-                createNoteWithText("Vertiges")
+                createNoteWithText("Cholestérol Vertiges Fumeur")
         );
         String riskLevel = risqueController.evaluation(notes, patient);
 
